@@ -110,7 +110,7 @@ App.ProductsNewController = Ember.Controller.extend({
     createProduct: function() {
       var controller = this;
       this.get('model').save().then(function() {
-        controller.transitionToRoute('home');
+        controller.transitionToRoute('products');
       });
     }
   }
@@ -128,6 +128,7 @@ App.User = DS.Model.extend({
 
 App.Product = DS.Model.extend({
   name: DS.attr(),
+  description: DS.attr(),
   photo: DS.attr(),
   category: DS.attr(),
   brand: DS.attr(),
@@ -135,5 +136,9 @@ App.Product = DS.Model.extend({
   asking_price: DS.attr(),
   created_at: DS.attr(),
   updated_at: DS.attr(),
-  user: DS.belongsTo('user', { async: true })
+  user: DS.belongsTo('user', { async: true }),
+  photo_link: function() {
+    return "/assets/product_images/" + this.get('photo') + "_image.jpg";
+  }.property('photo')
+
 });

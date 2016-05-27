@@ -12,7 +12,7 @@ $config['displayErrorDetails'] = true;
 $config['db']['host']   = "localhost:8889";
 $config['db']['user']   = "root";
 $config['db']['pass']   = "root";
-$config['db']['dbname'] = "tradesy_app";
+$config['db']['dbname'] = "yardsley";
 
 $app = new \Slim\App(["settings" => $config]);
 
@@ -49,7 +49,7 @@ $app->post('/users', function (Request $request, Response $response) {
     $data = $request->getParsedBody();
     $user_data = [];
     $user_data['name'] = filter_var($data['user']['name'], FILTER_SANITIZE_STRING);
-    $user_data['email'] = filter_var($data['user']['email'], FILTER_SANITIZE_STRING);
+    $user_data['email'] = filter_var($data['user']['email'], FILTER_SANITIZE_EMAIL);
 
     $res = $mapper->addUser($user_data);
 
@@ -88,13 +88,14 @@ $app->post('/products', function (Request $request, Response $response) {
 
     $data = $request->getParsedBody();
     $product_data = [];
-    $product_data['user_id'] = filter_var($data['product']['user_id'], FILTER_SANITIZE_STRING);
+    $product_data['user_id'] = filter_var($data['product']['user_id'], FILTER_SANITIZE_NUMBER_INT);
     $product_data['name'] = filter_var($data['product']['name'], FILTER_SANITIZE_STRING);
-    $product_data['photo'] = filter_var($data['product']['photo'], FILTER_SANITIZE_STRING);
+    $product_data['description'] = filter_var($data['product']['description'], FILTER_SANITIZE_STRING);
+    $product_data['photo'] = 'generic'; //filter_var($data['product']['photo'], FILTER_SANITIZE_STRING);
     $product_data['category'] = filter_var($data['product']['category'], FILTER_SANITIZE_STRING);
     $product_data['brand'] = filter_var($data['product']['brand'], FILTER_SANITIZE_STRING);
-    $product_data['original_price'] = filter_var($data['product']['original_price'], FILTER_SANITIZE_STRING);
-    $product_data['asking_price'] = filter_var($data['product']['asking_price'], FILTER_SANITIZE_STRING);
+    $product_data['original_price'] = filter_var($data['product']['original_price'], FILTER_SANITIZE_NUMBER_INT);
+    $product_data['asking_price'] = filter_var($data['product']['asking_price'], FILTER_SANITIZE_NUMBER_INT);
 
     $res = $mapper->addProduct($product_data);
 

@@ -35,9 +35,10 @@ class ProductMapper
 
 	public function addProduct($data)
 	{
-		$sql = $this->conn->prepare("INSERT INTO products (user_id, name, photo, category, brand, original_price, asking_price, created_at, updated_at) VALUES (:user_id, :name, :photo, :category, :brand, :original_price, :asking_price, :created_at, :updated_at)");
+		$sql = $this->conn->prepare("INSERT INTO products (user_id, name, description, photo, category, brand, original_price, asking_price, created_at, updated_at) VALUES (:user_id, :name, :description, :photo, :category, :brand, :original_price, :asking_price, :created_at, :updated_at)");
 		$sql->bindValue(":user_id", $data['user_id']);
 		$sql->bindValue(":name", $data['name']);
+		$sql->bindValue(":description", $data['description']);
 		$sql->bindValue(":photo", $data['photo']);
 		$sql->bindValue(":category", $data['category']);
 		$sql->bindValue(":brand", $data['brand']);
