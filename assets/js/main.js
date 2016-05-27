@@ -23,7 +23,7 @@ App.Router.map(function() {
   });
 });
 
-App.HomeRoute = Ember.Route.extend({
+App.UsersIndexRoute = Ember.Route.extend({
   model: function() {
     return Ember.RSVP.hash({
       users: this.store.findAll('user'),
@@ -33,7 +33,7 @@ App.HomeRoute = Ember.Route.extend({
     controller.set('users', model.users);
   }
 });
-App.HomeController = Ember.ArrayController.extend({
+App.UsersIndexController = Ember.ArrayController.extend({
 });
 
 App.UsersNewRoute = Ember.Route.extend({
@@ -105,6 +105,7 @@ App.ProductsNewRoute = Ember.Route.extend({
   }
 });
 App.ProductsNewController = Ember.Controller.extend({
+  categories: ["Furnature", "Kitchen Ware", "Electronics"],
   actions: {
     createProduct: function() {
       var controller = this;
@@ -118,9 +119,10 @@ App.ProductsNewController = Ember.Controller.extend({
 
 //model attributes
 App.User = DS.Model.extend({
-  first_name: DS.attr(),
-  last_name: DS.attr(),
+  name: DS.attr(),
   email: DS.attr(),
+  created_at: DS.attr(),
+  updated_at: DS.attr(),
   products: DS.hasMany('product', { async: true })
 });
 

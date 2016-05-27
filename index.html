@@ -5,47 +5,92 @@
         <title>Test</title>
 
         <link href="/assets/css/vendor/bootstrap.min.css" media="all" rel="stylesheet" />
+        <link href="/assets/css/font-awesome.min.css" media="all" rel="stylesheet" />
         <link href="/assets/css/main.css" media="all" rel="stylesheet" />
 
         <script src="/assets/js/vendor/jquery-1.10.2.js"></script>
         <script src="/assets/js/vendor/handlebars-1.1.2.js"></script>
         <script src="/assets/js/vendor/ember-1.4.0.js"></script>
         <script src="/assets/js/vendor/ember-data.js"></script>
+        <script src="/assets/js/vendor/bootstrap.min.js"></script>
         <script src="/assets/js/main.js"></script>
     </head>
     <body>
         <script type="text/x-handlebars" data-template-name="application">
-            <div class="container">
-                <h1>Yardsley</h1>
-                {{outlet}}
-                <hr>
-                <div class='row'>
-                    <p class='pull-right'>
-                        {{#link-to 'users.new'}}New User{{/link-to}}
-                    </p>
-                    <p class='pull-right'>
-                        {{#link-to 'products.new'}}New Product{{/link-to}} |&nbsp;
-                    </p>
+            <nav class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+
+                        <!-- Collapsed Hamburger -->
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                            <span class="sr-only">Toggle Navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <!-- Branding Image -->
+                        <a class="navbar-brand" href="#">
+                            Yardsley
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                        <!-- Left Side Of Navbar -->
+                        <ul class="nav navbar-nav">
+                            <li>{{#link-to 'users'}}Users{{/link-to}}</li>
+                            <li>{{#link-to 'products'}}Products{{/link-to}}</li>
+                        </ul>
+
+                        <!-- right-side of nav bar -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>{{#link-to 'users.new'}}New User{{/link-to}}</li>
+                            <li>{{#link-to 'products.new'}}New Product{{/link-to}}</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </nav>
+                {{outlet}}
         </script>
 
         <script type="text/x-handlebars" data-template-name="home">
-            <ol class='breadcrumb'>
-                <li class='active'>Users</li>
-                <li>{{#link-to 'products'}}Products{{/link-to}}</li>
-            </ol>
-
-            <div class='row'>
-                <div class='col-sm-8'>
-                    {{render 'users/index' users}}
+            <div class="intro-header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="intro-message">
+                                <h1>Yardsley</h1>
+                                <h3>An Online Yardsale</h3>
+                                <hr class="intro-divider">
+                                <ul class="list-inline intro-social-buttons">
+                                    <li>
+                                        {{#link-to 'users' class="btn btn-default btn-lg"}}<i class="fa fa-user fa-fw"></i> <span class="network-name">Users</span>{{/link-to}}
+                                    </li>
+                                    <li>
+                                        {{#link-to 'products' class="btn btn-default btn-lg"}}<i class="fa fa-list fa-fw"></i> <span class="network-name">Products</span>{{/link-to}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <!-- /.container -->
+            </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="users">
+            <div class="container main-content">
+            <div class='row'>
+                <div class='col-sm-offset-2 col-sm-8'>
+                    {{outlet}}
+                </div>
+            </div>
             </div>
         </script>
 
         <script type="text/x-handlebars" data-template-name="users/index">
             <ul class="list-unstyled">
-                {{#each}}
+                {{#each users}}
                     {{user-details user=this tag='li' class='row'}}
                 {{else}}
                     <li>There are no users</li>
@@ -55,7 +100,7 @@
 
         <script type="text/x-handlebars" data-template-name="components/user-details">
             <div class='col-sm-9'>
-                <h3>{{#link-to 'user.index' user}}{{user.first_name}} {{user.last_name}}{{/link-to}} <span class="edit_link"><a href="#">Edit</a></h3>
+                <h3>{{#link-to 'user.index' user}}{{user.name}}{{/link-to}} <span class="edit_link"><a href="#">Edit</a></h3>
                 <p class='text-muted'><em>Email Address: {{user.email}}</em></p>
             </div>
         </script>
@@ -64,15 +109,9 @@
             <div class='row'>
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label for="first_name" class="col-sm-2 control-label">First Name</label>
+                        <label for="name" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-9">
-                            {{input class="form-control" id="first_name" placeholder="First Name" valueBinding="model.first_name"}}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="last_name" class="col-sm-2 control-label">Last Name</label>
-                        <div class="col-sm-9">
-                            {{input class="form-control" id="last_name" placeholder="Last Name" valueBinding="model.last_name"}}
+                            {{input class="form-control" id="name" placeholder="Name" valueBinding="model.name"}}
                         </div>
                     </div>
                     <div class="form-group">
@@ -91,26 +130,19 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="user">
-            <ol class='breadcrumb'>
-                <li>{{#link-to 'home'}}Users{{/link-to}}</li>
-                <li class='active'>{{first_name}}</li>
-            </ol>
-
             <div class='col-sm-12'>
-                <h3>{{first_name}} {{last_name}} <span class="edit_link"><a href="#">Edit</a></h3>
+                <h3>{{name}} <span class="edit_link"><a href="#">Edit</a></h3>
                 <p class='text-muted'><em>Email Address: {{email}}</em></p>
             </div>
         </script>
 
         <script type="text/x-handlebars" data-template-name="products">
-            <ol class='breadcrumb'>
-                <li>{{#link-to 'home'}}Users{{/link-to}}</li>
-                <li class='active'>Products</li>
-            </ol>
+            <div class="container main-content">
             <div class='row'>
-                <div class='col-sm-8'>
+                <div class='col-sm-offset-2 col-sm-8'>
                     {{outlet}}
                 </div>
+            </div>
             </div>
         </script>
 
@@ -154,9 +186,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="category" class="col-sm-2 control-label">Category</label>
+                        <label for="category" class="col-sm-2 control-label">Rating</label>
                         <div class="col-sm-9">
-                            {{input class="form-control" id="category" placeholder="Category" valueBinding="model.category"}}
+                            {{view Ember.Select content=categories valueBinding='model.category' class="form-control" id="category"}}
                         </div>
                     </div>
                     <div class="form-group">
@@ -180,7 +212,7 @@
                     <div class="form-group">
                         <label for="product_user" class="col-sm-2 control-label">User</label>
                         <div class="col-sm-9">
-                            {{view Ember.Select content=users optionLabelPath="content.first_name" valueBinding="model.user" class="form-control" id="product_user"}}
+                            {{view Ember.Select content=users optionLabelPath="content.name" valueBinding="model.user" class="form-control" id="product_user"}}
                         </div>
                     </div>
                     <div class="form-group">

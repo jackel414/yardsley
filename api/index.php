@@ -48,8 +48,7 @@ $app->post('/users', function (Request $request, Response $response) {
 
     $data = $request->getParsedBody();
     $user_data = [];
-    $user_data['first_name'] = filter_var($data['user']['first_name'], FILTER_SANITIZE_STRING);
-    $user_data['last_name'] = filter_var($data['user']['last_name'], FILTER_SANITIZE_STRING);
+    $user_data['name'] = filter_var($data['user']['name'], FILTER_SANITIZE_STRING);
     $user_data['email'] = filter_var($data['user']['email'], FILTER_SANITIZE_STRING);
 
     $res = $mapper->addUser($user_data);
@@ -101,6 +100,15 @@ $app->post('/products', function (Request $request, Response $response) {
 
     $response->getBody()->write(json_encode($res));
     return $response;
+});
+
+$app->delete('/products/{id}', function(Request $request, Response $response, $args) {
+    $product_id = (int)$args['id'];
+    $mapper = new ProductMapper($this->db);
+    $mapper->deleteProduct($product_id);
+
+    $response->withStatus(204);
+    return $response;    
 });
 
 $app->run();

@@ -35,10 +35,11 @@ class UserMapper
 
 	public function addUser($data)
 	{
-		$sql = $this->conn->prepare("INSERT INTO users (first_name, last_name, email) VALUES (:first_name, :last_name, :email)");
-		$sql->bindValue(":first_name", $data['first_name']);
-		$sql->bindValue(":last_name", $data['last_name']);
+		$sql = $this->conn->prepare("INSERT INTO users (name, email, created_at, updated_at) VALUES (:name, :email, :created_at, :updated_at)");
+		$sql->bindValue(":name", $data['name']);
 		$sql->bindValue(":email", $data['email']);
+		$sql->bindValue(":created_at", date("Y-m-d H:i:s"));
+		$sql->bindValue(":updated_at", date("Y-m-d H:i:s"));
 		$sql->execute();
 
 		$user_sql = $this->conn->prepare("SELECT * FROM users WHERE id = :id");

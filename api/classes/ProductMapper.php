@@ -56,4 +56,13 @@ class ProductMapper
 
 		return $product;
 	}
+
+	public function deleteProduct($id)
+	{
+		$sql = $this->conn->prepare("DELETE FROM products WHERE id = :id");
+		$sql->bindValue(":id", $id);
+		$sql->execute();
+
+		return true;
+	}
 }
