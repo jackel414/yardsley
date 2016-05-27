@@ -15,6 +15,12 @@ App.Router.map(function() {
     });
     this.route('new');
   });
+  this.resource('products', function() {
+    this.resource('product', { path: ':product_id' }, function() {
+      this.route('edit');
+    });
+    this.route('new');
+  });
 });
 
 App.HomeRoute = Ember.Route.extend({
@@ -62,6 +68,54 @@ App.UsersNewController = Ember.Controller.extend({
   }
 });
 
+App.ProductsIndexRoute = Ember.Route.extend({
+  model: function() {
+    return Ember.RSVP.hash({
+      products: this.store.findAll('product'),
+    });
+  },
+  setupController: function(controller, model) {
+    controller.set('products', model.products);
+  }
+});
+App.ProductsIndexController = Ember.ArrayController.extend({
+});
+
+App.ProductsNewRoute = Ember.Route.extend({
+  model: function() {
+    return Ember.RSVP.hash({
+      product: this.store.createRecord('product'),
+      users: this.store.findAll('user')
+    });
+  },
+  setupController: function(controller, model) {
+    controller.set('model', model.product);
+    controller.set('users', model.users);
+  },
+  actions: {
+    willTransition: function(transition) {
+      if(this.currentModel.product.get('isNew')) {
+        if(confirm("Are you sure you want to abandon progress?")) {
+          this.currentModel.product.destroyRecord();
+        } else {
+          transition.abort();
+        }
+      }
+    }
+  }
+});
+App.ProductsNewController = Ember.Controller.extend({
+  actions: {
+    createProduct: function() {
+      var controller = this;
+      this.get('model').save().then(function() {
+        controller.transitionToRoute('home');
+      });
+    }
+  }
+});
+
+
 //model attributes
 App.User = DS.Model.extend({
   first_name: DS.attr(),
@@ -72,5 +126,12 @@ App.User = DS.Model.extend({
 
 App.Product = DS.Model.extend({
   name: DS.attr(),
+  photo: DS.attr(),
+  category: DS.attr(),
+  brand: DS.attr(),
+  original_price: DS.attr(),
+  asking_price: DS.attr(),
+  created_at: DS.attr(),
+  updated_at: DS.attr(),
   user: DS.belongsTo('user', { async: true })
 });
