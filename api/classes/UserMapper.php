@@ -16,6 +16,14 @@ class UserMapper
 
 		$users = array('users' => array());
 		foreach($results as $row) {
+			$sql = $this->conn->prepare("SELECT id FROM products WHERE user_id = :id");
+			$sql->bindValue(":id", $row['id']);
+			$sql->execute();
+			$product_results = $sql->fetchAll();
+			$row['product_ids'] = array();
+			foreach($product_results as $product_result) {
+				array_push($row['product_ids'], $product_result['id']);
+			}
 			$users['users'][] = $row;
 		}
 		return $users;

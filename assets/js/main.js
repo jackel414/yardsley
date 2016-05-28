@@ -12,6 +12,7 @@ App.Router.map(function() {
   this.resource('users', function() {
     this.resource('user', { path: ':user_id' }, function() {
       this.route('edit');
+      this.route('products');
     });
     this.route('new');
   });
@@ -67,6 +68,20 @@ App.UsersNewController = Ember.Controller.extend({
     }
   }
 });
+
+App.UserProductsRoute = Ember.Route.extend({
+  model: function() {
+    return Ember.RSVP.hash({
+      user: this.store.find('user', this.modelFor('user').get('id')),
+    });
+  },
+  setupController: function(controller, model) {
+    controller.set('user', model.user);
+  }
+});
+App.UserProductsController = Ember.ArrayController.extend({
+});
+
 
 App.ProductsIndexRoute = Ember.Route.extend({
   model: function() {

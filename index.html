@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Test</title>
+        <title>Yardsley</title>
 
         <link href="/assets/css/vendor/bootstrap.min.css" media="all" rel="stylesheet" />
         <link href="/assets/css/font-awesome.min.css" media="all" rel="stylesheet" />
@@ -87,8 +87,6 @@
             <div class="container main-content">
             <div class='row'>
                 <div class='col-sm-offset-2 col-sm-8'>
-                    <h3 class="text-center">Users</h3>
-                    <hr>
                     {{outlet}}
                 </div>
             </div>
@@ -96,6 +94,8 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="users/index">
+            <h3 class="text-center">Users</h3>
+            <hr>
             <ul class="list-unstyled">
                 {{#each users}}
                     {{user-details user=this tag='li' class='row'}}
@@ -106,13 +106,26 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="user">
-            {{user-details user=this tag='div' class='row'}}
+            {{outlet}}
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="user/products">
+            <h3 class="text-center">Products for {{user.name}}</h3>
+            <hr>
+            {{#each user.products}}
+                {{product-details product=this tag='div' class='row'}}
+            {{else}}
+                <li>There are no products</li>
+            {{/each}}
         </script>
 
         <script type="text/x-handlebars" data-template-name="components/user-details">
             <div class='col-sm-9'>
                 <h4>{{user.name}}</h4>
                 <p class='text-muted'><em>Email Address: {{user.email}}</em></p>
+                <p>Products for sale: {{user.products.length}}</p>
+                {{#link-to 'user.products' user class="btn btn-default"}}<i class="fa fa-list fa-fw"></i> <span class="network-name">View Products</span>{{/link-to}}
+                <p>&nbsp;</p>
             </div>
         </script>
 
@@ -171,7 +184,7 @@
                 <img {{bind-attr src='product.photo_link'}} height="100" width="100" />
             </div>
             <div class='col-sm-9'>
-                <h3>{{#link-to 'product.index' product}}{{product.name}}{{/link-to}} <span class="edit_link"><a href="#">Edit</a></h3>
+                <h3>{{#link-to 'product.index' product}}{{product.name}}{{/link-to}} <span class="edit_link"><a href="#">Edit</a></span></h3>
                 <p>Description: 
                     {{#if product.description}}
                         {{product.description}}
@@ -180,6 +193,7 @@
                     {{/if}}
                 </p>
                 <p class='text-muted'><em>Asking Price: {{product.asking_price}}</em></p>
+                <p class='text-muted'><em>Seller: {{product.user.name}}</em></p>
             </div>
         </script>
 
