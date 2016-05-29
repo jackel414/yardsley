@@ -15,6 +15,8 @@ class UserMapper
 		$results = $sql->fetchAll();
 
 		$users = array('users' => array());
+
+		//for each user, get a list of their products as a sub-array so ember can build the relationships appropriately
 		foreach($results as $row) {
 			$sql = $this->conn->prepare("SELECT id FROM products WHERE user_id = :id");
 			$sql->bindValue(":id", $row['id']);

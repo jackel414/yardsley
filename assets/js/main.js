@@ -62,6 +62,8 @@ App.UsersNewController = Ember.Controller.extend({
   actions: {
     createUser: function() {
       var controller = this;
+
+      // validate required attributes from the user form
       if ( !this.get('model').get('name') || this.get('model').get('name') === '' ) {
         alert("Please enter a name.");
         return;
@@ -142,6 +144,7 @@ App.ProductsNewController = Ember.Controller.extend({
     createProduct: function() {
       var controller = this;
 
+      // validate required attributes from the product form
       if ( !this.get('model').get('name') || this.get('model').get('name') === '' ) {
         alert("Please enter a name.");
         return;

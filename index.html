@@ -153,8 +153,6 @@
             <div class="container main-content">
             <div class='row'>
                 <div class='col-sm-offset-2 col-sm-8'>
-                    <h3 class="text-center">Products</h3>
-                    <hr>
                     {{outlet}}
                 </div>
             </div>
@@ -162,6 +160,8 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="products/index">
+            <h3 class="text-center">Products</h3>
+            <hr>
             <ul class="list-unstyled">
                 {{#each products}}
                     {{product-details product=this tag='li' class='row'}}
@@ -172,6 +172,8 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="product">
+            <h3 class="text-center">{{name}}</h3>
+            <hr>
             {{product-details product=this tag='div' class='row'}}
         </script>
 
@@ -188,12 +190,18 @@
                         <em>None</em>
                     {{/if}}
                 </p>
+                <p>Brand: {{product.brand}}</p>
+                <p class='text-muted'><em>Original Price: ${{product.original_price}}.00</em></p>
                 <p class='text-muted'><em>Asking Price: ${{product.asking_price}}.00</em></p>
                 <p class='text-muted'><em>Seller: {{product.user.name}}</em></p>
+                <div class='label label-primary'>{{product.category}}</div>
+                <p>&nbsp;</p>
             </div>
         </script>
 
         <script type="text/x-handlebars" data-template-name="products/new">
+            <h3 class="text-center">New Product</h3>
+            <hr>
             <div class='row'>
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
