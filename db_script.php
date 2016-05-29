@@ -2,7 +2,7 @@
 $servername = "localhost:8889";
 $username = "root";
 $password = "root";
-$dbname = "yardsley_test";
+$dbname = "yardsley";
 
 try
 {
@@ -10,7 +10,7 @@ try
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	
-    $create_db = "CREATE DATABASE IF NOT EXISTS `yardsley_test` DEFAULT CHARACTER SET latin1 					COLLATE latin1_swedish_ci;
+    $create_db = "CREATE DATABASE IF NOT EXISTS `yardsley` DEFAULT CHARACTER SET latin1 					COLLATE latin1_swedish_ci;
 					USE `yardsley`";
 					
     $conn->exec($create_db);

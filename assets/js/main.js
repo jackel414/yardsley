@@ -63,7 +63,7 @@ App.UsersNewController = Ember.Controller.extend({
     createUser: function() {
       var controller = this;
       this.get('model').save().then(function() {
-        controller.transitionToRoute('home');
+        controller.transitionToRoute('users');
       });
     }
   }
