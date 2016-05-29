@@ -62,6 +62,23 @@ App.UsersNewController = Ember.Controller.extend({
   actions: {
     createUser: function() {
       var controller = this;
+      if ( !this.get('model').get('name') || this.get('model').get('name') === '' ) {
+        alert("Please enter a name.");
+        return;
+      }
+      
+      if ( !this.get('model').get('email') || this.get('model').get('email') === '' ) {
+        alert("Please enter an email address.");
+        return;
+      } else {
+        var atpos = this.get('model').get('email').indexOf("@");
+        var dotpos = this.get('model').get('email').lastIndexOf(".");
+        if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= this.get('model').get('email').length) {
+            alert("Not a valid e-mail address");
+            return;
+        }        
+      }
+      
       this.get('model').save().then(function() {
         controller.transitionToRoute('users');
       });
@@ -124,6 +141,33 @@ App.ProductsNewController = Ember.Controller.extend({
   actions: {
     createProduct: function() {
       var controller = this;
+
+      if ( !this.get('model').get('name') || this.get('model').get('name') === '' ) {
+        alert("Please enter a name.");
+        return;
+      }
+      
+      if ( !this.get('model').get('brand') || this.get('model').get('brand') === '' ) {
+        alert("Please enter a brand.");
+        return;
+      }
+      
+      if ( !this.get('model').get('original_price') || this.get('model').get('original_price') === '' ) {
+        alert("Please enter an original price.");
+        return;
+      } else if ( /^\d+$/.test(this.get('model').get('original_price')) === false ) {
+        alert("Original price can only contain numbers.");
+        return;
+      }
+      
+      if ( !this.get('model').get('asking_price') || this.get('model').get('asking_price') === '' ) {
+        alert("Please enter an asking price.");
+        return;
+      } else if ( /^\d+$/.test(this.get('model').get('asking_price')) === false ) {
+        alert("Asking price can only contain numbers.");
+        return;
+      }
+      
       this.get('model').save().then(function() {
         controller.transitionToRoute('products');
       });
