@@ -91,7 +91,7 @@ $app->post('/products', function (Request $request, Response $response) {
     $product_data['user_id'] = filter_var($data['product']['user_id'], FILTER_SANITIZE_NUMBER_INT);
     $product_data['name'] = filter_var($data['product']['name'], FILTER_SANITIZE_STRING);
     $product_data['description'] = filter_var($data['product']['description'], FILTER_SANITIZE_STRING);
-    $product_data['photo'] = 'generic'; //filter_var($data['product']['photo'], FILTER_SANITIZE_STRING);
+    $product_data['photo'] = $data['product']['photo'] != '' ? filter_var($data['product']['photo'], FILTER_SANITIZE_URL) : "/assets/product_images/generic_image.jpg";
     $product_data['category'] = filter_var($data['product']['category'], FILTER_SANITIZE_STRING);
     $product_data['brand'] = filter_var($data['product']['brand'], FILTER_SANITIZE_STRING);
     $product_data['original_price'] = filter_var($data['product']['original_price'], FILTER_SANITIZE_NUMBER_INT);

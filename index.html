@@ -177,10 +177,10 @@
 
         <script type="text/x-handlebars" data-template-name="components/product-details">
             <div class='col-sm-3'>
-                <img {{bind-attr src='product.photo_link'}} height="100" width="100" />
+                <img {{bind-attr src='product.photo'}} height="100" width="100" />
             </div>
             <div class='col-sm-9'>
-                <h3>{{#link-to 'product.index' product}}{{product.name}}{{/link-to}} <span class="edit_link"><a href="#">Edit</a></span></h3>
+                <h3>{{#link-to 'product.index' product}}{{product.name}}{{/link-to}}</h3>
                 <p>Description: 
                     {{#if product.description}}
                         {{product.description}}
@@ -247,10 +247,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="photo" class="col-sm-2 control-label">Photo</label>
+                        <label for="photo" class="col-sm-2 control-label">Photo URL</label>
                         <div class="col-sm-9">
-                            {{input type="file" id="photo" placeholder="Photo" valueBinding="model.photo"}}
-                            <p class="help-block">Optional.</p>
+                            {{input class="form-control" id="photo" placeholder="Photo" valueBinding="model.photo"}}
+                            <p class="help-block"><em>Optional</em></p>
                         </div>
                     </div>
                     <div class="form-group">

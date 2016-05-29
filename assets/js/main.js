@@ -151,9 +151,5 @@ App.Product = DS.Model.extend({
   asking_price: DS.attr(),
   created_at: DS.attr(),
   updated_at: DS.attr(),
-  user: DS.belongsTo('user', { async: true }),
-  photo_link: function() {
-    return "/assets/product_images/" + this.get('photo') + "_image.jpg";
-  }.property('photo')
-
+  user: DS.belongsTo('user', { async: true })
 });
